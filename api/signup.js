@@ -11,15 +11,25 @@ const {
   } = require("../validations/email");
 
 
-createUsers=(user_id,username,email,password)=>{
+createUsers=(user_id,username,email,hashedpassword,password)=>{
     return new Promise((resolve,reject)=>{
-        var sql="insert into  Users(user_id,username,email,password) values(?,?,?,?)";
-        connection.query(sql,[user_id,username,email,password],(err,results)=>{
+        var sql="insert into  Users(user_id,username,email,password,access_level) values(?,?,?,?,?)";
+        connection.query(sql,[user_id,username,email,hashedpassword,0],(err,results)=>{
             if(err){
                 return reject(err)
             }
             else{
-                return resolve(results);
+
+                let user={"email":email,"password":password}
+
+                const token = jwt.sign(user, process.env.TOKENREGISTER, {
+                    expiresIn: "1day",
+                  });
+                  let response={
+                      message:'User Register Successfully',
+                      token:token,
+                  }
+                return resolve(response);
             }
         })
     })
@@ -39,7 +49,7 @@ router.post('/user',emailvalidation,async (req,res)=>{
        
 
 
-        let postuser= await createUsers(user_id,username,email,hashedpassword);
+        let postuser= await createUsers(user_id,username,email,password,hashedpassword);
         res.json({
             status:true,
             message:'User Created Successfully',

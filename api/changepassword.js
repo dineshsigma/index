@@ -46,6 +46,11 @@ router.post('/changepassword',async (req,res)=>{
         let confirm_password=req.body.confirm_password;
 
         let insert_change= await changepassword(userid,old_password,new_password,confirm_password);
+        res.json({
+            status:true,
+            message:' Password  updated Successfully'
+
+        })
 
     }
     catch(error){

@@ -7,9 +7,11 @@ let {randomnumbers}=require('../randomnumbers/randomnumbers');
 
 createProperty=(pro_id,propertytitle,status,propertytype,price,description,name,phone,image,location,address,pincode,bathrooms,bedrooms)=>{
     return new Promise((resolve,reject)=>{
-        var sql="insert into addProperty(pro_id,propertytitle,status,propertytype,price,description,name,phone,image,location,address,pincode,bathrooms,bedrooms) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        connection.query(sql,[pro_id,propertytitle,status,propertytype,price,description,name,phone,image,location,address,pincode,bathrooms,bedrooms],(err,results)=>{
+        let createdOn=new Date();
+        var sql="insert into addProperty(pro_id,propertytitle,status,propertytype,price,description,name,phone,image,location,address,pincode,bathrooms,bedrooms,createdOn) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        connection.query(sql,[pro_id,propertytitle,status,propertytype,price,description,name,phone,image,location,address,pincode,bathrooms,bedrooms,createdOn],(err,results)=>{
             if(err){
+
                 return reject(err)
             }
             else{

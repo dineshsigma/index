@@ -7,8 +7,9 @@ let {propertyvalidation}=require('../validations/propertytype')
 
 createPropertyType=(pro_typeid,propertytype,bathrooms,bedrooms)=>{
     return new Promise((resolve,reject)=>{
-        var sql="insert into propertyType(pro_typeid,propertytype,bathrooms,bedrooms) values(?,?,?,?)";
-        connection.query(sql,[pro_typeid,propertytype,bathrooms,bedrooms],(err,results)=>{
+        let createdOn=new Date();
+        var sql="insert into propertyType(pro_typeid,propertytype,bathrooms,bedrooms,createdOn) values(?,?,?,?,?)";
+        connection.query(sql,[pro_typeid,propertytype,bathrooms,bedrooms,createdOn],(err,results)=>{
             if(err){
                 return reject(err);
 
